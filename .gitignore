@@ -1,0 +1,37 @@
+# Sensitive files - DO NOT COMMIT
+config.yaml
+nre_credentials.txt
+*.pid
+.departure-board.pid
+
+# Logs
+*.log
+departure-board.log
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+ENV/
+env/
+.eggs/
+*.egg-info/
+*.egg
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude
+.claude/

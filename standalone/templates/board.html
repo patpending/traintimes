@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ station_name }} - Live Departures</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/departure-board.css') }}">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚂</text></svg>">
+</head>
+<body>
+    <div class="departure-board" data-station="{{ station_crs }}">
+        <!-- Header -->
+        <header class="board-header">
+            <div class="station-info">
+                <h1 class="station-name" id="station-name">{{ station_name }}</h1>
+                <div class="station-subtitle">Live Departures</div>
+            </div>
+            <div class="clock-container">
+                <div class="clock" id="clock">--:--</div>
+                <div class="date" id="date"></div>
+            </div>
+        </header>
+
+        <!-- Station selector (optional) -->
+        <div class="station-selector">
+            <label for="station-select">Station: </label>
+            <select id="station-select">
+                <!-- Populated by JavaScript -->
+            </select>
+        </div>
+
+        <!-- Column headers -->
+        <div class="column-headers">
+            <span>Time</span>
+            <span>Destination</span>
+            <span>Plat</span>
+            <span>Expected</span>
+        </div>
+
+        <!-- Departures list -->
+        <main class="departures-container" id="departures-container">
+            <div class="loading">
+                Loading departures<span class="loading-dots"></span>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="board-footer">
+            <div class="last-updated">
+                <span class="refresh-indicator"></span>
+                <span id="last-updated">Connecting...</span>
+            </div>
+            <div class="data-source">
+                Data: National Rail Enquiries
+            </div>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/board.js') }}"></script>
+</body>
+</html>

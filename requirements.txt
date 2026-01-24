@@ -1,0 +1,20 @@
+# UK Train Departures - Python Dependencies
+#
+# Install with: pip install -r requirements.txt
+
+# SOAP client for National Rail Darwin API
+zeep>=4.2.1
+
+# Web framework for standalone app
+flask>=3.0.0
+
+# YAML config parsing
+pyyaml>=6.0
+
+# For async support (used by Home Assistant integration)
+aiohttp>=3.9.0
+
+# Development dependencies (optional)
+# pytest>=7.0.0
+# black>=23.0.0
+# mypy>=1.0.0

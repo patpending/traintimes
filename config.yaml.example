@@ -1,0 +1,32 @@
+# UK Train Departures Configuration
+#
+# Copy this file to config.yaml and fill in your settings.
+# Get your API token from: https://opendata.nationalrail.co.uk/
+
+# Your National Rail Darwin API token (required)
+# Sign up at: https://opendata.nationalrail.co.uk/registration
+api_token: "YOUR_API_TOKEN_HERE"
+
+# Station CRS code to show departures from
+# Find your station code: https://www.nationalrail.co.uk/stations_destinations/
+# Common examples:
+#   PAD - London Paddington
+#   EUS - London Euston
+#   KGX - London King's Cross
+#   VIC - London Victoria
+#   WAT - London Waterloo
+#   BHM - Birmingham New Street
+#   MAN - Manchester Piccadilly
+station_crs: "PAD"
+
+# Number of departures to show (1-10)
+num_departures: 6
+
+# Optional: Filter to only show trains going to this station
+# Leave empty or remove to show all departures
+destination_crs: ""
+
+# Server settings (standalone mode only)
+server:
+  port: 5000
+  debug: false

@@ -1,0 +1,41 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "UK Train Departures",
+        "description": "Enter your National Rail Darwin API token and station details. Get your API token from the [National Rail Data Portal](https://opendata.nationalrail.co.uk/).",
+        "data": {
+          "api_token": "API Token",
+          "station_crs": "Station CRS Code (e.g., PAD for Paddington)",
+          "destination_crs": "Filter by Destination CRS (optional)",
+          "num_departures": "Number of Departures to Show"
+        },
+        "data_description": {
+          "api_token": "Your Darwin API token from the National Rail Data Portal",
+          "station_crs": "The 3-letter CRS code for your station",
+          "destination_crs": "Only show trains going to this destination (optional)",
+          "num_departures": "How many departure slots to create (1-10)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to the National Rail API",
+      "invalid_auth": "Invalid API token",
+      "unknown": "An unexpected error occurred"
+    },
+    "abort": {
+      "already_configured": "This station is already configured"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Configure UK Train Departures",
+        "data": {
+          "destination_crs": "Filter by Destination CRS (optional)",
+          "num_departures": "Number of Departures to Show"
+        }
+      }
+    }
+  }
+}
