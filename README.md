@@ -141,7 +141,43 @@ export PORT=5000
 ./startup.sh
 ```
 
-## Home Assistant Integration
+## Home Assistant Add-on (Recommended)
+
+The easiest way to use this in Home Assistant is as an Add-on.
+
+### Installation
+
+1. **Add the repository to Home Assistant**
+   - Go to **Settings > Add-ons > Add-on Store**
+   - Click the three dots menu in the top right
+   - Select **Repositories**
+   - Add: `https://github.com/patpending/traintimes`
+   - Click **Add**
+
+2. **Install the add-on**
+   - Find "UK Train Departures" in the add-on store
+   - Click **Install**
+
+3. **Configure the add-on**
+   - Go to the **Configuration** tab
+   - Enter your:
+     - **API Token**: Your National Rail Darwin API token
+     - **Station CRS**: Your station's 3-letter code (e.g., "SVG" for Stevenage)
+     - **Destination Filter**: Optional comma-separated CRS codes to filter trains (e.g., "KGX,STP,CTK")
+     - **Number of Departures**: How many trains to show (1-10)
+   - Click **Save**
+
+4. **Start the add-on**
+   - Go to the **Info** tab
+   - Click **Start**
+   - Enable **Show in sidebar** for easy access
+
+5. **View the departure board**
+   - Click **Open Web UI** or use the sidebar link
+
+## Home Assistant Custom Integration (Alternative)
+
+For sensor entities in Home Assistant, you can also install as a custom component.
 
 ### Installation
 

@@ -1,5 +1,6 @@
 # Sensitive files - DO NOT COMMIT
-config.yaml
+/config.yaml
+!/traintimes-addon/config.yaml
 nre_credentials.txt
 *.pid
 .departure-board.pid

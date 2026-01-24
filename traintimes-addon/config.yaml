@@ -1,0 +1,31 @@
+name: UK Train Departures
+description: Live UK train departure board with authentic station styling
+version: "1.0.0"
+slug: traintimes
+url: https://github.com/patpending/traintimes
+arch:
+  - amd64
+  - aarch64
+  - armv7
+  - armhf
+  - i386
+startup: application
+boot: auto
+homeassistant_api: false
+host_network: false
+ingress: true
+ingress_port: 5050
+panel_icon: mdi:train
+panel_title: Train Departures
+options:
+  api_token: ""
+  station_crs: "PAD"
+  destination_filter: ""
+  num_departures: 6
+  log_level: info
+schema:
+  api_token: str
+  station_crs: str
+  destination_filter: str?
+  num_departures: int(1,10)
+  log_level: list(debug|info|warning|error)

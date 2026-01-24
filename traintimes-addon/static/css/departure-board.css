@@ -1,0 +1,425 @@
+/**
+ * UK Train Departure Board Styles
+ *
+ * Authentic styling to replicate the look of real UK station departure boards.
+ * Uses amber/orange LED-style text on dark background with dot matrix typography.
+ */
+
+/* Import Dot Matrix font from CDN */
+@font-face {
+  font-family: 'Dot Matrix';
+  src: url('https://cdn.jsdelivr.net/gh/DanielHartUK/Dot-Matrix-Typeface@master/fonts/Dot%20Matrix%20Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Dot Matrix';
+  src: url('https://cdn.jsdelivr.net/gh/DanielHartUK/Dot-Matrix-Typeface@master/fonts/Dot%20Matrix%20Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* CSS Variables */
+:root {
+  --board-bg: #0a0a0a;
+  --board-bg-secondary: #111111;
+  --board-header-bg: #1a1a1a;
+  --board-text: #ff9900;
+  --board-text-bright: #ffaa00;
+  --board-text-dim: #cc7a00;
+  --board-green: #00ff00;
+  --board-red: #ff3333;
+  --board-border: #333333;
+  --row-hover: rgba(255, 153, 0, 0.05);
+}
+
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  background: var(--board-bg);
+  color: var(--board-text);
+  font-family: 'Dot Matrix', 'Courier New', 'Lucida Console', monospace;
+}
+
+/* Main container */
+.departure-board {
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  animation: subtle-flicker 4s infinite;
+}
+
+/* Header section */
+.board-header {
+  background: var(--board-header-bg);
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 3px solid var(--board-border);
+}
+
+.station-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.station-name {
+  font-size: 2.5em;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-shadow: 0 0 10px rgba(255, 153, 0, 0.5);
+}
+
+.station-subtitle {
+  font-size: 1em;
+  color: var(--board-text-dim);
+  letter-spacing: 2px;
+}
+
+.clock-container {
+  text-align: right;
+}
+
+.clock {
+  font-size: 3em;
+  font-weight: bold;
+  text-shadow: 0 0 15px rgba(255, 153, 0, 0.6);
+}
+
+.date {
+  font-size: 1em;
+  color: var(--board-text-dim);
+  margin-top: 5px;
+}
+
+/* Column headers */
+.column-headers {
+  display: grid;
+  grid-template-columns: 80px 1fr 70px 100px;
+  padding: 15px 30px;
+  background: var(--board-bg-secondary);
+  border-bottom: 2px solid var(--board-border);
+  font-size: 0.9em;
+  color: var(--board-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Departure rows container */
+.departures-container {
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* Individual departure row */
+.departure-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 70px 100px;
+  padding: 15px 30px;
+  border-bottom: 1px solid #222;
+  align-items: start;
+  transition: background-color 0.3s ease;
+  min-height: 80px;
+}
+
+.departure-row:hover {
+  background: var(--row-hover);
+}
+
+.departure-row:first-child {
+  background: rgba(255, 153, 0, 0.08);
+  border-left: 4px solid var(--board-text);
+}
+
+.departure-row.cancelled {
+  opacity: 0.7;
+}
+
+/* Time column */
+.time {
+  font-size: 1.4em;
+  font-weight: bold;
+}
+
+/* Destination column */
+.destination-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.destination {
+  font-size: 1.3em;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.operator {
+  font-size: 0.8em;
+  color: var(--board-text-dim);
+}
+
+/* Calling points */
+.calling-points-container {
+  overflow: hidden;
+  position: relative;
+  height: 1.2em;
+}
+
+.calling-points {
+  font-size: 0.85em;
+  color: var(--board-text-dim);
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.calling-points.scrolling {
+  animation: scroll-calling-points 20s linear infinite;
+}
+
+.calling-label {
+  color: var(--board-text);
+}
+
+/* Platform column */
+.platform {
+  font-size: 1.4em;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Expected/Status column */
+.expected {
+  font-size: 1.1em;
+  font-weight: bold;
+  text-align: right;
+}
+
+.expected.on-time {
+  color: var(--board-green);
+}
+
+.expected.delayed {
+  color: var(--board-text);
+  animation: blink 1s step-end infinite;
+}
+
+.expected.cancelled {
+  color: var(--board-red);
+}
+
+/* Reason text */
+.reason {
+  font-size: 0.75em;
+  color: var(--board-text-dim);
+  margin-top: 4px;
+}
+
+/* No departures message */
+.no-departures {
+  text-align: center;
+  padding: 60px 30px;
+  font-size: 1.5em;
+  color: var(--board-text-dim);
+}
+
+/* Loading state */
+.loading {
+  text-align: center;
+  padding: 60px 30px;
+  font-size: 1.5em;
+}
+
+.loading-dots::after {
+  content: '';
+  animation: loading-dots 1.5s infinite;
+}
+
+/* Error message */
+.error-message {
+  background: rgba(255, 51, 51, 0.1);
+  border: 1px solid var(--board-red);
+  color: var(--board-red);
+  padding: 20px 30px;
+  margin: 20px 30px;
+  text-align: center;
+}
+
+/* Footer */
+.board-footer {
+  background: var(--board-header-bg);
+  padding: 15px 30px;
+  border-top: 2px solid var(--board-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85em;
+  color: var(--board-text-dim);
+}
+
+.last-updated {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.refresh-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--board-green);
+  animation: pulse 2s infinite;
+}
+
+/* Station selector (for demo mode) */
+.station-selector {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--board-header-bg);
+  padding: 10px 15px;
+  border: 1px solid var(--board-border);
+  border-radius: 4px;
+  z-index: 100;
+}
+
+.station-selector select {
+  background: var(--board-bg);
+  color: var(--board-text);
+  border: 1px solid var(--board-border);
+  padding: 8px 12px;
+  font-family: inherit;
+  font-size: 0.9em;
+  cursor: pointer;
+}
+
+.station-selector select:focus {
+  outline: none;
+  border-color: var(--board-text);
+}
+
+/* Animations */
+@keyframes scroll-calling-points {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.8);
+  }
+}
+
+@keyframes loading-dots {
+  0% { content: '.'; }
+  33% { content: '..'; }
+  66% { content: '...'; }
+}
+
+@keyframes subtle-flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.99; }
+  75% { opacity: 0.995; }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .board-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+    padding: 15px 20px;
+  }
+
+  .station-name {
+    font-size: 1.8em;
+  }
+
+  .clock {
+    font-size: 2.2em;
+  }
+
+  .column-headers {
+    grid-template-columns: 60px 1fr 50px 80px;
+    padding: 10px 15px;
+    font-size: 0.75em;
+  }
+
+  .departure-row {
+    grid-template-columns: 60px 1fr 50px 80px;
+    padding: 12px 15px;
+  }
+
+  .time,
+  .platform {
+    font-size: 1.1em;
+  }
+
+  .destination {
+    font-size: 1.1em;
+  }
+
+  .station-selector {
+    position: static;
+    margin: 10px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .station-name {
+    font-size: 1.4em;
+    letter-spacing: 1px;
+  }
+
+  .clock {
+    font-size: 1.8em;
+  }
+
+  .column-headers {
+    display: none;
+  }
+
+  .departure-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .departure-row::before {
+    content: attr(data-time);
+    font-weight: bold;
+  }
+}
