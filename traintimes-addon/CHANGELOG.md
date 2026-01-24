@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.0
+
+- Fix s6-overlay service structure for Home Assistant
+- Use hassio-addons base image with s6-overlay v3
+
 ## 1.0.0
 
 - Initial release
