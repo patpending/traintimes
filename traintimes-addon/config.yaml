@@ -1,6 +1,6 @@
 name: UK Train Departures
 description: Live UK train departure board with authentic station styling
-version: "1.1.0"
+version: "1.2.0"
 slug: traintimes
 url: https://github.com/patpending/traintimes
 arch:
@@ -11,6 +11,7 @@ arch:
   - i386
 startup: application
 boot: auto
+init: false
 homeassistant_api: false
 host_network: false
 ingress: true

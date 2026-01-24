@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.0
+
+- Switch to simpler Python base image without s6-overlay
+- Fix container startup issues
+
 ## 1.1.0
 
 - Fix s6-overlay service structure for Home Assistant
