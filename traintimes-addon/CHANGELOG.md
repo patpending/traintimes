@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.6
+
+- Fix: OptionsFlow constructor (don't pass config_entry, HA provides it)
+
 ## 2.0.5
 
 - Fix: Force clean integration install (removes old cached files)
