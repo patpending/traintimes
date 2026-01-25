@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.8
+
+- Support comma-separated destination CRS codes (e.g., "KGX,STP,CTK")
+- Client-side filtering for multiple destinations
+- Improved integration icon
+
 ## 2.0.7
 
 - Fix: Use Home Assistant's shared aiohttp session for API calls

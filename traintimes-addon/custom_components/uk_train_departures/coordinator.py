@@ -45,21 +45,46 @@ class TrainDeparturesCoordinator(DataUpdateCoordinator[list[TrainService]]):
         self.api = api
         self.station_crs = station_crs
         self.num_departures = num_departures
-        self.destination_crs = destination_crs
+        # Parse comma-separated destination codes
+        self.destination_list: list[str] = []
+        if destination_crs:
+            self.destination_list = [d.strip().upper() for d in destination_crs.split(',') if d.strip()]
         self.watched_trains = watched_trains or []
         self.watched_train_data: dict[str, TrainService | None] = {}
 
     async def _async_update_data(self) -> list[TrainService]:
         """Fetch data from the Darwin API."""
         try:
-            # Fetch more rows if we have watched trains to find
-            rows_to_fetch = max(self.num_departures, 20) if self.watched_trains else self.num_departures
+            # Fetch more rows to allow for client-side filtering
+            rows_to_fetch = max(self.num_departures, 20)
 
-            services = await self.api.async_get_departure_board(
+            # If multiple destinations, don't use API filter - we'll filter client-side
+            api_filter = None
+            if len(self.destination_list) == 1:
+                api_filter = self.destination_list[0]
+
+            all_services = await self.api.async_get_departure_board(
                 station_crs=self.station_crs,
                 num_rows=rows_to_fetch,
-                destination_crs=self.destination_crs,
+                destination_crs=api_filter,
             )
+
+            # Client-side filter by destination/calling points if multiple destinations
+            if len(self.destination_list) > 1:
+                filtered = []
+                for service in all_services:
+                    # Check if final destination matches any in list
+                    if service.destination_crs.upper() in self.destination_list:
+                        filtered.append(service)
+                        continue
+                    # Check if any calling point matches
+                    for cp in service.calling_points:
+                        if cp.crs.upper() in self.destination_list:
+                            filtered.append(service)
+                            break
+                services = filtered
+            else:
+                services = all_services
 
             # Find watched trains
             self.watched_train_data = {}
