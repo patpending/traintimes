@@ -8,6 +8,7 @@ import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.core import callback
 from homeassistant.data_entry_flow import FlowResult
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .api import DarwinApi, DarwinApiError
 from .const import (
@@ -45,8 +46,9 @@ class UKTrainDeparturesConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         errors: dict[str, str] = {}
 
         if user_input is not None:
-            # Validate the API token
-            api = DarwinApi(user_input[CONF_API_TOKEN])
+            # Validate the API token using HA's shared session
+            session = async_get_clientsession(self.hass)
+            api = DarwinApi(user_input[CONF_API_TOKEN], session=session)
 
             try:
                 # Test the connection with the specified station (use async method directly)

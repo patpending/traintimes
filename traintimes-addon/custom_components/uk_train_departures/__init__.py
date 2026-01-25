@@ -5,6 +5,7 @@ import logging
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .api import DarwinApi
 from .const import (
@@ -32,8 +33,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up UK Train Departures from a config entry."""
     hass.data.setdefault(DOMAIN, {})
 
-    # Create API client
-    api = DarwinApi(entry.data[CONF_API_TOKEN])
+    # Create API client with HA's shared session
+    session = async_get_clientsession(hass)
+    api = DarwinApi(entry.data[CONF_API_TOKEN], session=session)
 
     # Build watched trains list
     watched_trains = []

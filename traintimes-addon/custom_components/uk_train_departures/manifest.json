@@ -8,5 +8,5 @@
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/patpending/traintimes/issues",
   "requirements": ["aiohttp>=3.9.0"],
-  "version": "2.2.1"
+  "version": "2.2.2"
 }

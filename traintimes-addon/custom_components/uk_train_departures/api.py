@@ -97,9 +97,10 @@ class DarwinApiError(Exception):
 class DarwinApi:
     """Async client for the National Rail Darwin SOAP API."""
 
-    def __init__(self, api_token: str):
+    def __init__(self, api_token: str, session: aiohttp.ClientSession | None = None):
         """Initialize the Darwin API client."""
         self._api_token = api_token
+        self._session = session
 
     def _build_request(self, station_crs: str, num_rows: int,
                        destination_crs: Optional[str] = None,
@@ -149,10 +150,10 @@ class DarwinApi:
                 'SOAPAction': 'http://thalesgroup.com/RTTI/2015-05-14/ldb/GetDepBoardWithDetails'
             }
 
-            async with aiohttp.ClientSession() as session:
+            async def do_request(session: aiohttp.ClientSession) -> list[TrainService]:
                 async with session.post(
                     DARWIN_ENDPOINT,
-                    data=soap_request.encode('utf-8'),
+                    data=soap_request,
                     headers=headers,
                     timeout=aiohttp.ClientTimeout(total=30)
                 ) as response:
@@ -160,10 +161,19 @@ class DarwinApi:
                         raise DarwinApiError("Invalid API token - authentication failed")
 
                     if response.status != 200:
+                        text = await response.text()
+                        _LOGGER.error("API error response: %s", text[:500])
                         raise DarwinApiError(f"API returned status {response.status}")
 
                     text = await response.text()
                     return self._parse_response(text)
+
+            # Use provided session or create a new one
+            if self._session:
+                return await do_request(self._session)
+            else:
+                async with aiohttp.ClientSession() as session:
+                    return await do_request(session)
 
         except aiohttp.ClientError as e:
             _LOGGER.error("Request error: %s", str(e))

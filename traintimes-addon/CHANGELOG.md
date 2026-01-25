@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.7
+
+- Fix: Use Home Assistant's shared aiohttp session for API calls
+- Better error logging for API failures
+
 ## 2.0.6
 
 - Fix: OptionsFlow constructor (don't pass config_entry, HA provides it)
