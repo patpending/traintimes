@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.4
+
+- Add integration icon (amber train logo)
+
 ## 2.0.3
 
 - Fix: Encode SOAP request as UTF-8 bytes for aiohttp (fixes 500 error)
