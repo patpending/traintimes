@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.0.0
+
+**Major update: Bundled Home Assistant Integration**
+
+- Auto-installs UK Train Departures integration on add-on startup
+- New sensor entities for automations:
+  - `sensor.departures_from_xxx_departure_1/2/3` - Next departures
+  - `sensor.departures_from_xxx_0645_train` - Watched train by time
+  - `binary_sensor.xxx_0645_train_delayed` - Is train delayed?
+  - `binary_sensor.xxx_0645_train_cancelled` - Is train cancelled?
+- Configure up to 3 watched trains for commute tracking
+- All sensors include: `summary`, `is_delayed`, `delay_minutes`, `expected_time`
+- After add-on starts, restart HA and add integration via Settings > Integrations
+
 ## 1.4.0
 
 - Fix API calls to use correct base URL from ingress path

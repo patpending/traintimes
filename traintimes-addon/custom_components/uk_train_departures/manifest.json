@@ -1,0 +1,12 @@
+{
+  "domain": "uk_train_departures",
+  "name": "UK Train Departures",
+  "codeowners": ["@patpending"],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/patpending/traintimes",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/patpending/traintimes/issues",
+  "requirements": ["aiohttp>=3.9.0"],
+  "version": "2.1.0"
+}

@@ -1,0 +1,61 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "UK Train Departures",
+        "description": "Enter your National Rail Darwin API token and station details. Get your API token from the [National Rail Data Portal](https://opendata.nationalrail.co.uk/).",
+        "data": {
+          "api_token": "API Token",
+          "station_crs": "Station CRS Code (e.g., PAD for Paddington)",
+          "destination_crs": "Filter by Destination CRS (optional)",
+          "num_departures": "Number of Departures to Show"
+        },
+        "data_description": {
+          "api_token": "Your Darwin API token from the National Rail Data Portal",
+          "station_crs": "The 3-letter CRS code for your station",
+          "destination_crs": "Only show trains going to this destination (optional)",
+          "num_departures": "How many departure slots to create (1-10)"
+        }
+      },
+      "watched_trains": {
+        "title": "Watched Trains",
+        "description": "Configure up to 3 specific trains to track for automations. Enter the scheduled departure time (HH:MM) and optionally filter by destination.",
+        "data": {
+          "watched_train_1_time": "Train 1 - Scheduled Time (e.g., 06:45)",
+          "watched_train_1_destination": "Train 1 - Destination Filter (optional)",
+          "watched_train_2_time": "Train 2 - Scheduled Time",
+          "watched_train_2_destination": "Train 2 - Destination Filter (optional)",
+          "watched_train_3_time": "Train 3 - Scheduled Time",
+          "watched_train_3_destination": "Train 3 - Destination Filter (optional)"
+        },
+        "data_description": {
+          "watched_train_1_time": "The scheduled departure time of your train",
+          "watched_train_1_destination": "Filter by destination name or CRS code",
+          "watched_train_2_time": "The scheduled departure time of your train",
+          "watched_train_2_destination": "Filter by destination name or CRS code",
+          "watched_train_3_time": "The scheduled departure time of your train",
+          "watched_train_3_destination": "Filter by destination name or CRS code"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to the National Rail API",
+      "invalid_auth": "Invalid API token",
+      "unknown": "An unexpected error occurred"
+    },
+    "abort": {
+      "already_configured": "This station is already configured"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Configure UK Train Departures",
+        "data": {
+          "destination_crs": "Filter by Destination CRS (optional)",
+          "num_departures": "Number of Departures to Show"
+        }
+      }
+    }
+  }
+}
