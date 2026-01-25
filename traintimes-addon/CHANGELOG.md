@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.3
+
+- Fix: Encode SOAP request as UTF-8 bytes for aiohttp (fixes 500 error)
+
 ## 2.0.2
 
 - Fix: Use async API method in config flow (fixes "unknown" error)

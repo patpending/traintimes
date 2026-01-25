@@ -152,7 +152,7 @@ class DarwinApi:
             async with aiohttp.ClientSession() as session:
                 async with session.post(
                     DARWIN_ENDPOINT,
-                    data=soap_request,
+                    data=soap_request.encode('utf-8'),
                     headers=headers,
                     timeout=aiohttp.ClientTimeout(total=30)
                 ) as response:
