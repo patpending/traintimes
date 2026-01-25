@@ -16,6 +16,26 @@
           "destination_crs": "Only show trains going to this destination (optional)",
           "num_departures": "How many departure slots to create (1-10)"
         }
+      },
+      "watched_trains": {
+        "title": "Watched Trains",
+        "description": "Configure up to 3 specific trains to track for automations. Enter the scheduled departure time (HH:MM) and optionally filter by destination.",
+        "data": {
+          "watched_train_1_time": "Train 1 - Scheduled Time (e.g., 06:45)",
+          "watched_train_1_destination": "Train 1 - Destination Filter (optional)",
+          "watched_train_2_time": "Train 2 - Scheduled Time",
+          "watched_train_2_destination": "Train 2 - Destination Filter (optional)",
+          "watched_train_3_time": "Train 3 - Scheduled Time",
+          "watched_train_3_destination": "Train 3 - Destination Filter (optional)"
+        },
+        "data_description": {
+          "watched_train_1_time": "The scheduled departure time of your train",
+          "watched_train_1_destination": "Filter by destination name or CRS code",
+          "watched_train_2_time": "The scheduled departure time of your train",
+          "watched_train_2_destination": "Filter by destination name or CRS code",
+          "watched_train_3_time": "The scheduled departure time of your train",
+          "watched_train_3_destination": "Filter by destination name or CRS code"
+        }
       }
     },
     "error": {

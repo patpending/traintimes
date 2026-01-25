@@ -15,6 +15,12 @@ from .const import (
     CONF_DESTINATION_CRS,
     CONF_NUM_DEPARTURES,
     CONF_STATION_CRS,
+    CONF_WATCHED_TRAIN_1_TIME,
+    CONF_WATCHED_TRAIN_1_DEST,
+    CONF_WATCHED_TRAIN_2_TIME,
+    CONF_WATCHED_TRAIN_2_DEST,
+    CONF_WATCHED_TRAIN_3_TIME,
+    CONF_WATCHED_TRAIN_3_DEST,
     DEFAULT_NUM_DEPARTURES,
     DOMAIN,
     STATION_CODES,
@@ -27,6 +33,10 @@ class UKTrainDeparturesConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for UK Train Departures."""
 
     VERSION = 1
+
+    def __init__(self) -> None:
+        """Initialize the config flow."""
+        self._user_input: dict[str, Any] = {}
 
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
@@ -56,16 +66,14 @@ class UKTrainDeparturesConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 errors["base"] = "unknown"
             else:
                 station_crs = user_input[CONF_STATION_CRS].upper()
-                station_name = STATION_CODES.get(station_crs, station_crs)
 
                 # Check if already configured for this station
                 await self.async_set_unique_id(f"{station_crs}")
                 self._abort_if_unique_id_configured()
 
-                return self.async_create_entry(
-                    title=f"Departures from {station_name}",
-                    data=user_input,
-                )
+                # Store data and proceed to watched trains step
+                self._user_input = user_input
+                return await self.async_step_watched_trains()
 
         # Build the schema
         data_schema = vol.Schema(
@@ -86,6 +94,39 @@ class UKTrainDeparturesConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             description_placeholders={
                 "station_codes_url": "https://www.nationalrail.co.uk/stations_destinations/48702.aspx"
             },
+        )
+
+    async def async_step_watched_trains(
+        self, user_input: dict[str, Any] | None = None
+    ) -> FlowResult:
+        """Handle the watched trains configuration step."""
+        if user_input is not None:
+            # Merge with previous input
+            self._user_input.update(user_input)
+
+            station_crs = self._user_input[CONF_STATION_CRS].upper()
+            station_name = STATION_CODES.get(station_crs, station_crs)
+
+            return self.async_create_entry(
+                title=f"Departures from {station_name}",
+                data=self._user_input,
+            )
+
+        # Build schema for watched trains
+        data_schema = vol.Schema(
+            {
+                vol.Optional(CONF_WATCHED_TRAIN_1_TIME, default=""): str,
+                vol.Optional(CONF_WATCHED_TRAIN_1_DEST, default=""): str,
+                vol.Optional(CONF_WATCHED_TRAIN_2_TIME, default=""): str,
+                vol.Optional(CONF_WATCHED_TRAIN_2_DEST, default=""): str,
+                vol.Optional(CONF_WATCHED_TRAIN_3_TIME, default=""): str,
+                vol.Optional(CONF_WATCHED_TRAIN_3_DEST, default=""): str,
+            }
+        )
+
+        return self.async_show_form(
+            step_id="watched_trains",
+            data_schema=data_schema,
         )
 
     @staticmethod

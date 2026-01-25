@@ -6,6 +6,14 @@ CONF_API_TOKEN = "api_token"
 CONF_DESTINATION_CRS = "destination_crs"
 CONF_NUM_DEPARTURES = "num_departures"
 
+# Watched trains configuration
+CONF_WATCHED_TRAIN_1_TIME = "watched_train_1_time"
+CONF_WATCHED_TRAIN_1_DEST = "watched_train_1_destination"
+CONF_WATCHED_TRAIN_2_TIME = "watched_train_2_time"
+CONF_WATCHED_TRAIN_2_DEST = "watched_train_2_destination"
+CONF_WATCHED_TRAIN_3_TIME = "watched_train_3_time"
+CONF_WATCHED_TRAIN_3_DEST = "watched_train_3_destination"
+
 DEFAULT_NUM_DEPARTURES = 3
 DEFAULT_SCAN_INTERVAL = 30  # seconds
 
