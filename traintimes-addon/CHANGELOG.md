@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.9
+
+- Fix: Don't pass comma-separated destinations to API (use client-side filtering)
+- Add debug logging to diagnose destination filter issues
+
 ## 2.0.8
 
 - Support comma-separated destination CRS codes (e.g., "KGX,STP,CTK")

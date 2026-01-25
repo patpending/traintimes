@@ -49,6 +49,10 @@ class TrainDeparturesCoordinator(DataUpdateCoordinator[list[TrainService]]):
         self.destination_list: list[str] = []
         if destination_crs:
             self.destination_list = [d.strip().upper() for d in destination_crs.split(',') if d.strip()]
+        _LOGGER.debug(
+            "Coordinator initialized: station=%s, destinations=%s (from '%s')",
+            station_crs, self.destination_list, destination_crs
+        )
         self.watched_trains = watched_trains or []
         self.watched_train_data: dict[str, TrainService | None] = {}
 
@@ -62,6 +66,11 @@ class TrainDeparturesCoordinator(DataUpdateCoordinator[list[TrainService]]):
             api_filter = None
             if len(self.destination_list) == 1:
                 api_filter = self.destination_list[0]
+
+            _LOGGER.debug(
+                "Fetching departures: station=%s, api_filter=%s, destination_list=%s",
+                self.station_crs, api_filter, self.destination_list
+            )
 
             all_services = await self.api.async_get_departure_board(
                 station_crs=self.station_crs,

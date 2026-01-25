@@ -53,13 +53,20 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                 "destination": dest_val or None,
             })
 
+    # Get destination filter
+    destination_crs = entry.data.get(CONF_DESTINATION_CRS) or None
+    _LOGGER.debug(
+        "Setting up integration: station=%s, destination=%s, data=%s",
+        entry.data[CONF_STATION_CRS], destination_crs, dict(entry.data)
+    )
+
     # Create coordinator
     coordinator = TrainDeparturesCoordinator(
         hass=hass,
         api=api,
         station_crs=entry.data[CONF_STATION_CRS],
         num_departures=entry.data.get(CONF_NUM_DEPARTURES, DEFAULT_NUM_DEPARTURES),
-        destination_crs=entry.data.get(CONF_DESTINATION_CRS) or None,
+        destination_crs=destination_crs,
         watched_trains=watched_trains,
     )
 
