@@ -165,7 +165,18 @@ class TrainDepartureSensor(CoordinatorEntity[TrainDeparturesCoordinator], Sensor
         delay_mins = calculate_delay_minutes(service.scheduled_time, service.expected_time)
         is_delayed = service.status == STATUS_DELAYED or delay_mins > 0
 
+        # Build summary string
+        if service.is_cancelled:
+            summary = f"{service.scheduled_time} to {service.destination} - CANCELLED"
+        elif service.expected_time == "On time":
+            summary = f"{service.scheduled_time} to {service.destination} - On time"
+        elif delay_mins > 0:
+            summary = f"{service.scheduled_time} to {service.destination} - Exp {service.expected_time} ({delay_mins} min late)"
+        else:
+            summary = f"{service.scheduled_time} to {service.destination} - Exp {service.expected_time}"
+
         return {
+            "summary": summary,
             "scheduled_time": service.scheduled_time,
             "expected_time": service.expected_time,
             "platform": service.platform,
@@ -335,6 +346,7 @@ class WatchedTrainSensor(CoordinatorEntity[TrainDeparturesCoordinator], SensorEn
         if not service:
             return {
                 **base_attrs,
+                "summary": f"{self._scheduled_time} - Train not found",
                 "expected_time": None,
                 "platform": None,
                 "destination": None,
@@ -347,6 +359,16 @@ class WatchedTrainSensor(CoordinatorEntity[TrainDeparturesCoordinator], SensorEn
 
         delay_mins = calculate_delay_minutes(service.scheduled_time, service.expected_time)
         is_delayed = service.status == STATUS_DELAYED or delay_mins > 0
+
+        # Build summary string
+        if service.is_cancelled:
+            summary = f"{service.scheduled_time} to {service.destination} - CANCELLED"
+        elif service.expected_time == "On time":
+            summary = f"{service.scheduled_time} to {service.destination} - On time"
+        elif delay_mins > 0:
+            summary = f"{service.scheduled_time} to {service.destination} - Exp {service.expected_time} ({delay_mins} min late)"
+        else:
+            summary = f"{service.scheduled_time} to {service.destination} - Exp {service.expected_time}"
 
         # Format calling points
         calling_points = [
@@ -361,6 +383,7 @@ class WatchedTrainSensor(CoordinatorEntity[TrainDeparturesCoordinator], SensorEn
 
         return {
             **base_attrs,
+            "summary": summary,
             "expected_time": service.expected_time,
             "platform": service.platform,
             "destination": service.destination,
