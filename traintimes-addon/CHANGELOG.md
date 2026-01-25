@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.4.0
+
+- Fix API calls to use correct base URL from ingress path
+- Remove problematic base tag from HTML
+
 ## 1.3.0
 
 - Fix static files and API paths for Home Assistant ingress

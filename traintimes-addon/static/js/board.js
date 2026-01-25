@@ -16,6 +16,9 @@ class DepartureBoard {
     this.lastUpdatedElement = document.getElementById('last-updated');
     this.stationNameElement = document.getElementById('station-name');
 
+    // Get base URL for API calls (handles HA ingress)
+    this.baseUrl = window.location.pathname.replace(/\/$/, '');
+
     this.departures = [];
     this.isLoading = false;
     this.error = null;
@@ -67,7 +70,7 @@ class DepartureBoard {
 
   async loadStations(selectElement) {
     try {
-      const response = await fetch('./api/stations');
+      const response = await fetch(`${this.baseUrl}/api/stations`);
       const data = await response.json();
 
       data.stations.forEach(station => {
@@ -91,7 +94,7 @@ class DepartureBoard {
     this.showLoading();
 
     try {
-      const url = `./api/departures?station=${this.stationCrs}&num=${this.numDepartures}`;
+      const url = `${this.baseUrl}/api/departures?station=${this.stationCrs}&num=${this.numDepartures}`;
       const response = await fetch(url);
       const data = await response.json();
 

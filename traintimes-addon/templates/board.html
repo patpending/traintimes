@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ station_name }} - Live Departures</title>
-    <link rel="stylesheet" href="./static/css/departure-board.css">
+    <link rel="stylesheet" href="static/css/departure-board.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚂</text></svg>">
-    <base href="{{ request.script_root }}/">
 </head>
 <body>
     <div class="departure-board" data-station="{{ station_crs }}">
@@ -57,6 +56,6 @@
         </footer>
     </div>
 
-    <script src="./static/js/board.js"></script>
+    <script src="static/js/board.js"></script>
 </body>
 </html>
