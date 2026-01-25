@@ -1,6 +1,6 @@
 name: UK Train Departures
 description: Live UK train departure board with authentic station styling
-version: "2.0.0"
+version: "2.0.1"
 slug: traintimes
 url: https://github.com/patpending/traintimes
 arch:
@@ -18,6 +18,8 @@ ingress: true
 ingress_port: 5050
 panel_icon: mdi:train
 panel_title: Train Departures
+map:
+  - config:rw
 options:
   api_token: ""
   station_crs: "PAD"

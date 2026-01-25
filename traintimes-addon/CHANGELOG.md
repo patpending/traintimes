@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1
+
+- Fix: Add `map: config:rw` to allow add-on to write integration files to /config
+
 ## 2.0.0
 
 **Major update: Bundled Home Assistant Integration**
