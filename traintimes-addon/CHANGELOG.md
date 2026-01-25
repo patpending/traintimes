@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.5
+
+- Fix: Force clean integration install (removes old cached files)
+- Integration version: 2.2.1
+
 ## 2.0.4
 
 - Add integration icon (amber train logo)

@@ -11,6 +11,8 @@ echo "=============================================="
 echo "Installing UK Train Departures integration..."
 if [ -d "/config" ]; then
     mkdir -p /config/custom_components
+    # Remove old integration to ensure clean install (including __pycache__)
+    rm -rf /config/custom_components/uk_train_departures
     cp -r /app/custom_components/uk_train_departures /config/custom_components/
     echo "Integration installed to /config/custom_components/uk_train_departures"
     echo "NOTE: Restart Home Assistant to load the integration, then add it via Settings > Integrations"
