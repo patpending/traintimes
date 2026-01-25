@@ -15,6 +15,9 @@ from darwin_api import DarwinApi, DarwinApiError
 
 app = Flask(__name__)
 
+# Support running behind Home Assistant ingress proxy
+app.config['APPLICATION_ROOT'] = '/'
+
 # Configuration
 API_TOKEN = os.environ.get('DARWIN_API_TOKEN', '')
 STATION_CRS = os.environ.get('STATION_CRS', 'PAD')

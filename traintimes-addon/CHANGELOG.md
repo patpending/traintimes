@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.0
+
+- Fix static files and API paths for Home Assistant ingress
+- Use relative URLs for CSS, JS, and API calls
+
 ## 1.2.0
 
 - Switch to simpler Python base image without s6-overlay
