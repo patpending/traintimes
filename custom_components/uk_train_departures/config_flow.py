@@ -49,20 +49,19 @@ class UKTrainDeparturesConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             api = DarwinApi(user_input[CONF_API_TOKEN])
 
             try:
-                # Test the connection with the specified station
-                await self.hass.async_add_executor_job(
-                    api.get_departure_board,
-                    user_input[CONF_STATION_CRS].upper(),
-                    1,
+                # Test the connection with the specified station (use async method directly)
+                await api.async_get_departure_board(
+                    station_crs=user_input[CONF_STATION_CRS].upper(),
+                    num_rows=1,
                 )
             except DarwinApiError as err:
                 _LOGGER.error("Failed to connect to Darwin API: %s", err)
-                if "Invalid token" in str(err) or "401" in str(err):
+                if "Invalid token" in str(err) or "401" in str(err) or "authentication" in str(err).lower():
                     errors["base"] = "invalid_auth"
                 else:
                     errors["base"] = "cannot_connect"
             except Exception as err:
-                _LOGGER.exception("Unexpected error during config flow")
+                _LOGGER.exception("Unexpected error during config flow: %s", err)
                 errors["base"] = "unknown"
             else:
                 station_crs = user_input[CONF_STATION_CRS].upper()

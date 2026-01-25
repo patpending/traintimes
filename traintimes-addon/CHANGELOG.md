@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.2
+
+- Fix: Use async API method in config flow (fixes "unknown" error)
+- Fix: Add translations/en.json for proper UI labels
+- Integration version: 2.2.0
+
 ## 2.0.1
 
 - Fix: Add `map: config:rw` to allow add-on to write integration files to /config
