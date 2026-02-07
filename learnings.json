@@ -2,7 +2,7 @@
   "last_session": "2026-02-07",
   "project_status": "active",
   "mothballed": false,
-  "current_version": "2.0.10",
+  "current_version": "2.0.11",
   "sessions": [
     {
       "date": "2026-02-07",
@@ -20,7 +20,9 @@
         "Realigned manifest.json version to match addon config.yaml 2.0.x series - addon config.yaml is what HA reads for update detection"
       ],
       "lessons_learned": [
-        "IMPORTANT: The addon has its own copy of the integration at traintimes-addon/custom_components/. run.sh copies THIS to /config/custom_components/ on HA startup. Editing only the root custom_components/ does NOT deploy to HA. Both copies must be kept in sync."
+        "IMPORTANT: The addon has its own copy of the integration at traintimes-addon/custom_components/. run.sh copies THIS to /config/custom_components/ on HA startup. Editing only the root custom_components/ does NOT deploy to HA. Both copies must be kept in sync.",
+        "IMPORTANT: When releasing a fix, the version must be HIGHER than what HA currently has installed. If HA already shows 2.0.10, releasing 2.0.10 with fixes does nothing — HA won't offer an update to the same version. Always increment to a new version number.",
+        "IMPORTANT: Version must be bumped in THREE places: traintimes-addon/config.yaml, custom_components/uk_train_departures/manifest.json, and traintimes-addon/custom_components/uk_train_departures/manifest.json. Then create a GitHub release with a matching tag."
       ]
     }
   ],

@@ -1,9 +1,10 @@
 # Changelog
 
-## 2.0.10
+## 2.0.11
 
 - Fix: Departure sensors now show "No train" instead of getting stuck on last seen train when no services are running
 - Fix: All sensor attributes are explicitly cleared when no services (prevents stale data)
+- Fix: Synced addon bundled integration with root copy
 - Fix: Synced manifest.json version with addon config.yaml
 
 ## 2.0.9
