@@ -1,0 +1,46 @@
+{
+  "last_session": "2026-02-07",
+  "project_status": "active",
+  "mothballed": false,
+  "current_version": "2.0.10",
+  "sessions": [
+    {
+      "date": "2026-02-07",
+      "summary": "Fixed bug where departure sensors showed stale data when no trains are running. Sensors now show 'No train' with fully cleared attributes instead of returning None/empty dict. Also fixed version sync - addon config.yaml is the canonical version source, manifest.json was out of sync (had drifted to 2.2.x while addon was 2.0.x).",
+      "changes": [
+        "sensor.py: TrainDepartureSensor.native_value returns 'No train' instead of None when no services",
+        "sensor.py: TrainDepartureSensor.extra_state_attributes returns full cleared attribute dict instead of {} when no services",
+        "manifest.json: version synced back to 2.0.x series (was 2.2.4, now 2.0.10)",
+        "traintimes-addon/config.yaml: version bumped to 2.0.10",
+        "Added CLAUDE.md and learnings.json for session continuity"
+      ],
+      "decisions": [
+        "Used 'No train' as the display string for empty state (not 'No service', 'N/A', etc.) to be user-friendly on HA dashboards",
+        "Realigned manifest.json version to match addon config.yaml 2.0.x series - addon config.yaml is what HA reads for update detection"
+      ]
+    }
+  ],
+  "known_issues": [
+    "No automated tests exist - test dependencies are commented out in requirements.txt",
+    "Code duplication between standalone/darwin_api.py, traintimes-addon/darwin_api.py, and custom_components api.py",
+    "manifest.json version had drifted from addon version - now fixed but watch for this"
+  ],
+  "architecture_notes": {
+    "deployment_modes": [
+      "Standalone Flask app (standalone/)",
+      "HA Add-on Docker container (traintimes-addon/)",
+      "HA Custom Component (custom_components/uk_train_departures/)"
+    ],
+    "data_flow": "Darwin SOAP API -> coordinator (30s poll) -> sensors read from coordinator.data",
+    "storage": "Stateless - no database, all data from live API",
+    "versioning": "Canonical version in traintimes-addon/config.yaml, must sync to manifest.json"
+  },
+  "key_files": {
+    "traintimes-addon/config.yaml": "Add-on config - canonical version number, HA reads this for updates",
+    "custom_components/uk_train_departures/manifest.json": "Integration manifest - version must match addon config",
+    "custom_components/uk_train_departures/sensor.py": "All sensor entity definitions (departure, summary, watched train)",
+    "custom_components/uk_train_departures/coordinator.py": "Data fetching coordinator, 30s polling interval",
+    "custom_components/uk_train_departures/api.py": "Async Darwin SOAP API client for HA integration",
+    "traintimes-addon/CHANGELOG.md": "User-facing release notes"
+  }
+}
