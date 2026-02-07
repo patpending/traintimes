@@ -135,19 +135,37 @@ class TrainDepartureSensor(CoordinatorEntity[TrainDeparturesCoordinator], Sensor
     def native_value(self) -> str | None:
         """Return the destination of this departure."""
         if not self.coordinator.data:
-            return None
+            return "No train"
         if self._departure_index >= len(self.coordinator.data):
-            return None
+            return "No train"
         service = self.coordinator.data[self._departure_index]
         return service.destination
 
     @property
     def extra_state_attributes(self) -> dict[str, Any]:
         """Return extra attributes for the sensor."""
+        no_service_attrs = {
+            "summary": "No train",
+            "scheduled_time": None,
+            "expected_time": None,
+            "platform": None,
+            "operator": None,
+            "operator_code": None,
+            "status": "no_service",
+            "is_delayed": False,
+            "is_cancelled": False,
+            "delay_minutes": 0,
+            "cancel_reason": None,
+            "delay_reason": None,
+            "destination_crs": None,
+            "calling_points": [],
+            "service_id": None,
+            "station_crs": self._station_crs,
+        }
         if not self.coordinator.data:
-            return {}
+            return no_service_attrs
         if self._departure_index >= len(self.coordinator.data):
-            return {"status": "no_service"}
+            return no_service_attrs
 
         service = self.coordinator.data[self._departure_index]
 
