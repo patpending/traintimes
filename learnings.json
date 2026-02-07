@@ -12,18 +12,23 @@
         "sensor.py: TrainDepartureSensor.extra_state_attributes returns full cleared attribute dict instead of {} when no services",
         "manifest.json: version synced back to 2.0.x series (was 2.2.4, now 2.0.10)",
         "traintimes-addon/config.yaml: version bumped to 2.0.10",
-        "Added CLAUDE.md and learnings.json for session continuity"
+        "Added CLAUDE.md and learnings.json for session continuity",
+        "CRITICAL FIX: Synced traintimes-addon/custom_components/ with root custom_components/ - the addon bundles its own copy and run.sh deploys THAT copy to HA, not the root one"
       ],
       "decisions": [
         "Used 'No train' as the display string for empty state (not 'No service', 'N/A', etc.) to be user-friendly on HA dashboards",
         "Realigned manifest.json version to match addon config.yaml 2.0.x series - addon config.yaml is what HA reads for update detection"
+      ],
+      "lessons_learned": [
+        "IMPORTANT: The addon has its own copy of the integration at traintimes-addon/custom_components/. run.sh copies THIS to /config/custom_components/ on HA startup. Editing only the root custom_components/ does NOT deploy to HA. Both copies must be kept in sync."
       ]
     }
   ],
   "known_issues": [
     "No automated tests exist - test dependencies are commented out in requirements.txt",
     "Code duplication between standalone/darwin_api.py, traintimes-addon/darwin_api.py, and custom_components api.py",
-    "manifest.json version had drifted from addon version - now fixed but watch for this"
+    "manifest.json version had drifted from addon version - now fixed but watch for this",
+    "CRITICAL: traintimes-addon/custom_components/ is a SEPARATE COPY that must be synced after any changes to root custom_components/"
   ],
   "architecture_notes": {
     "deployment_modes": [

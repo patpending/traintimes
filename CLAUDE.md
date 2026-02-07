@@ -70,6 +70,20 @@ There are currently **no automated tests**. Test dependencies are commented out 
 - **HA Integration**: Follows the standard HA pattern - `coordinator.py` fetches data every 30s, sensors read from coordinator.data.
 - **Sensor states**: When no trains are available, sensors should show "No train" (not None/unknown). Attributes must be explicitly cleared with all keys present to prevent stale values.
 
+## CRITICAL: Addon Bundled Integration Copy
+
+The addon at `traintimes-addon/` has its **own copy** of the HA integration at `traintimes-addon/custom_components/uk_train_departures/`. The addon's `run.sh` deploys THIS copy to `/config/custom_components/` on HA startup — NOT the root `custom_components/`.
+
+**After ANY change to files in `custom_components/uk_train_departures/`, you MUST sync to the addon copy:**
+
+```bash
+rsync -av --delete --exclude='__pycache__' \
+  custom_components/uk_train_departures/ \
+  traintimes-addon/custom_components/uk_train_departures/
+```
+
+Forgetting this means changes will exist in git but never reach the running HA instance.
+
 ## Project Mothballing
 
 When this project goes dormant:
